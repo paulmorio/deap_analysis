@@ -1,2 +1,5 @@
 # Ignore the dataset itself from upload
 /deap_data
+
+# The virtual environment
+/venv
