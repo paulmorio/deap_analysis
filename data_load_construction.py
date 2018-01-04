@@ -7,7 +7,7 @@ print type(x)
 print x['labels'].shape
 print x['data'].shape
 
-data = []
+data = {}
 for i in range(1,33):
 	if i < 10:
 		expId = "0" + str(i)
@@ -16,8 +16,8 @@ for i in range(1,33):
 
 	file_to_load = "deap_data/data_preprocessed_python/s" + expId + ".dat"
 	par_experiment_data = cPickle.load(open(file_to_load, 'rb'))
-	print(expId)
-	data.append(par_experiment_data)
+	print(i)
+	data[expId] = par_experiment_data
 
 f = open('deap_data/data_preprocessed_python/all_32.dat', 'wb')
 cPickle.dump(data, f, protocol=cPickle.HIGHEST_PROTOCOL)
