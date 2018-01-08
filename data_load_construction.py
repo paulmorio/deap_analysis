@@ -17,7 +17,7 @@ for i in range(1,33):
 	file_to_load = "deap_data/data_preprocessed_python/s" + expId + ".dat"
 	par_experiment_data = cPickle.load(open(file_to_load, 'rb'))
 	print(i)
-	data[expId] = par_experiment_data
+	data[i] = par_experiment_data
 
 f = open('deap_data/data_preprocessed_python/all_32.dat', 'wb')
 cPickle.dump(data, f, protocol=cPickle.HIGHEST_PROTOCOL)
