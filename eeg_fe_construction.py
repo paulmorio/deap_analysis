@@ -59,3 +59,7 @@ for person in participants:
 
 		X.append(x)
 	print person
+
+f = open('deap_data/eeg_data.dat', 'wb')
+cPickle.dump((X,y), f, protocol=cPickle.HIGHEST_PROTOCOL)
+f.close()
