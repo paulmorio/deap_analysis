@@ -59,3 +59,12 @@ def norm_second_differences(signal):
 	fd_sum = sum(sec_diff)
 	delta = float(fd_sum)/(len(signal_normed)-2)
 	return(delta)
+
+def package_deal_signal(signal):
+	"""Returns the package of mean, stdev, normalized first and second differences"""
+	m = mean(signal)
+	s = std_dev(signal)
+	nfd = norm_first_differences(signal)
+	nsd = norm_second_differences(signal)
+
+	return m,s,nfd,nsd
