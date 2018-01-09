@@ -15,7 +15,7 @@ def lr_assymetry_pfl(channels):
 	alphaL, thetaL, betaL = eeg_bands(f3)
 	alphaR, thetaR, betaR = eeg_bands(f4)
 
-	alpha_assymetry = np.log(alphaR)-np.log(alphaL)
+	alpha_assymetry = np.log(abs(alphaR))-np.log(abs(alphaL))
 	return alpha_assymetry
 
 def lr_assymetry_ears(channels):
@@ -31,7 +31,7 @@ def lr_assymetry_ears(channels):
 	alphaL, thetaL, betaL = eeg_bands(t7)
 	alphaR, thetaR, betaR = eeg_bands(t8)
 
-	alpha_assymetry = np.log(alphaR)-np.log(alphaL)
+	alpha_assymetry = np.log(abs(alphaR))-np.log(abs(alphaL))
 	return alpha_assymetry
 
 def lr_assymetry_back(channels):
@@ -47,7 +47,7 @@ def lr_assymetry_back(channels):
 	alphaL, thetaL, betaL = eeg_bands(o1)
 	alphaR, thetaR, betaR = eeg_bands(o2)
 
-	alpha_assymetry = np.log(alphaR)-np.log(alphaL)
+	alpha_assymetry = np.log(abs(alphaR))-np.log(abs(alphaL))
 	return alpha_assymetry
 
 def eeg_bands(signal):
@@ -99,7 +99,7 @@ def eeg_w_beta(signal):
 	alpha, theta, beta = eeg_bands(signal)
 	nomin = np.sum(beta)
 	denom = np.sum(theta + alpha)
-	eeg_w = np.log(nomin/denom)
+	eeg_w = np.log(abs(nomin/denom))
 	return eeg_w
 
 

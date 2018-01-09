@@ -68,3 +68,13 @@ def package_deal_signal(signal):
 	nsd = norm_second_differences(signal)
 
 	return m,s,nfd,nsd
+
+def data_binarizer(ratings, threshold):
+	"""binarizes the data below and above the threshold"""
+	binarized = []
+	for rating in ratings:
+		if rating <= threshold:
+			binarized.append(0)
+		else:
+			binarized.append(1)
+	return binarized
