@@ -50,6 +50,54 @@ def lr_assymetry_back(channels):
 	alpha_assymetry = np.log(abs(alphaR))-np.log(abs(alphaL))
 	return alpha_assymetry
 
+def lr_assymetry_pfl_t(channels):
+	# asymmetry between left-right prefrontal areas alpha waves, most related to emotional state, and approach withdrawal
+	# Prefrontal Cortex, Emotion, and Approach/Withdrawal Motivation
+	# Jeffrey M. Spielberg, Jennifer L. Stewart, Rebecca L. Levin, Gregory A. Miller, and Wendy Heller
+
+	# Left Nodes = f3 (3 in the data)
+	# Right Nodes = f4 (20)
+	f3 = channels[2]
+	f4 = channels[19]
+
+	alphaL, thetaL, betaL = eeg_bands(f3)
+	alphaR, thetaR, betaR = eeg_bands(f4)
+
+	alpha_assymetry = np.log(abs(thetaR))-np.log(abs(thetaL))
+	return alpha_assymetry
+
+def lr_assymetry_ears_t(channels):
+	# asymmetry between left-right ear areas alpha waves, most related to emotional state, and approach withdrawal
+	# Prefrontal Cortex, Emotion, and Approach/Withdrawal Motivation
+	# Jeffrey M. Spielberg, Jennifer L. Stewart, Rebecca L. Levin, Gregory A. Miller, and Wendy Heller
+
+	# Left Nodes = f3 (3 in the data)
+	# Right Nodes = f4 (20)
+	t7 = channels[7]
+	t8 = channels[25]
+
+	alphaL, thetaL, betaL = eeg_bands(t7)
+	alphaR, thetaR, betaR = eeg_bands(t8)
+
+	alpha_assymetry = np.log(abs(thetaR))-np.log(abs(thetaL))
+	return alpha_assymetry
+
+def lr_assymetry_back_t(channels):
+	# asymmetry between left right back areas alpha waves, most related to emotional state, and approach withdrawal
+	# "OCCIPITAL AREA" related to vision
+	# Jeffrey M. Spielberg, Jennifer L. Stewart, Rebecca L. Levin, Gregory A. Miller, and Wendy Heller
+
+	# Left Nodes = f3 (3 in the data)
+	# Right Nodes = f4 (20)
+	o1 = channels[7]
+	o2 = channels[25]
+
+	alphaL, thetaL, betaL = eeg_bands(o1)
+	alphaR, thetaR, betaR = eeg_bands(o2)
+
+	alpha_assymetry = np.log(abs(thetaR))-np.log(abs(thetaL))
+	return alpha_assymetry
+
 def eeg_bands(signal):
 	# returns the alpha, theta, beta
 	eeg = signal  

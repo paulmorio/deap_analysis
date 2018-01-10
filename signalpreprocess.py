@@ -61,9 +61,10 @@ def norm_second_differences(signal):
 	return(delta)
 
 def package_deal_signal(signal):
-	"""Returns the package of mean, stdev, normalized first and second differences"""
-	m = mean(signal)
-	s = std_dev(signal)
+	"""Returns the package of normalised mean, stdev, normalized first and second differences"""
+	normedSig = normalise_signal(signal)
+	m = mean(normedSig)
+	s = std_dev(normedSig)
 	nfd = norm_first_differences(signal)
 	nsd = norm_second_differences(signal)
 
