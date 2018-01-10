@@ -31,7 +31,7 @@ y = [] # put all ratings, so we can subset laters
 # construct feature vectors
 for person in participants:
 	for vid in videos:
-		channels_data = ((raw_data_dict[person])['data'])[vid]
+		channels_data = (((raw_data_dict[person])['data'])[vid])[:32]
 		ratings = ((raw_data_dict[person]['labels'])[vid])
 		y.append(ratings) # append video ratingS to labels
 
@@ -64,11 +64,11 @@ for person in participants:
 		x = x + [lr_pfl_m, lr_pfl_s, lr_pfl_nfd, lr_pfl_nsd, lr_ears_m, lr_ears_s, 
 				lr_ears_nfd, lr_ears_nsd, lr_back_m, lr_back_s, lr_back_nfd, lr_back_nsd]
 		
-		# eeg_w for all the channels
-		eeg_w_list = []
-		for signal in channels_data:
-			eeg_w_list.append(ef.eeg_w_beta(signal))
-		x = x + eeg_w_list
+		# # eeg_w for all the channels
+		# eeg_w_list = []
+		# for signal in channels_data:
+		# 	eeg_w_list.append(ef.eeg_w_beta(signal))
+		# x = x + eeg_w_list
 
 		X.append(x)
 	print person

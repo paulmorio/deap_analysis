@@ -30,14 +30,16 @@ y = [] # put all ratings, so we can subset laters
 # construct feature vectors
 for person in participants:
 	for vid in videos:
-		channels_data = ((raw_data_dict[person])['data'])[vid]
+		channels_data = (((raw_data_dict[person])['data'])[vid])[32:]
 		ratings = ((raw_data_dict[person]['labels'])[vid])
 		y.append(ratings) # append video ratingS to labels
 
 		print person
-		print channels_data
+		print len(channels_data)
 		# Our data vector
 		x = []
+
+		# Add features to our feature vector as necessary
 
 		X.append(x)
 	print person
