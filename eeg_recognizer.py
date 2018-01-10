@@ -10,6 +10,8 @@ from sklearn import datasets
 from sklearn import svm
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.tree import DecisionTreeClassifier
+from sklearn import linear_model
 from sklearn.naive_bayes import GaussianNB
 from sklearn.model_selection import GridSearchCV
 import numpy as np
@@ -60,6 +62,17 @@ print("Overall Accuracy:", round(metrics.accuracy_score(y_test, y_pred),2))
 
 # Create and fit the Model using the training data
 gnb = GaussianNB()
+gnb.fit(X_train, y_train)
+
+# Do some Metrics
+from sklearn import metrics
+y_pred = gnb.predict(X_test)
+print(metrics.classification_report(y_test, y_pred))
+print("Overall Accuracy:", round(metrics.accuracy_score(y_test, y_pred),2))
+
+
+# Create and fit the Model using the training data
+gnb = DecisionTreeClassifier(max_depth=5)
 gnb.fit(X_train, y_train)
 
 # Do some Metrics
