@@ -3,7 +3,7 @@
 # Affect recognition via EEG
 import numpy as np
 import signalpreprocess as sp
-import eeg_features as ef
+import peripheral_features as pf
 import cPickle
 
 
@@ -19,7 +19,7 @@ raw_data_dict = cPickle.load(open('deap_data/data_preprocessed_python/all_32.dat
 # 'data'	40 x 40 x 8064	video/trial x channel x data
 # 'labels'	40 x 4	video/trial x label (valence, arousal, dominance, liking)
 
-participants = range(1,3)
+participants = range(1,32)
 videos = range(1,40)
 channels = range(33,41) # we are interested only in the EEG data at the moment. 
 
@@ -34,12 +34,14 @@ for person in participants:
 		ratings = ((raw_data_dict[person]['labels'])[vid])
 		y.append(ratings) # append video ratingS to labels
 
-		print person
-		print len(channels_data)
 		# Our data vector
 		x = []
 
 		# Add features to our feature vector as necessary
+		for signal in channels_data:
+			m, s, nfd, nsd = sp.package_deal_signal(signal)
+			x.extend([m,s,nfd,nsd])
+			x.extend(pf.power_spectrums(signal))
 
 		X.append(x)
 	print person

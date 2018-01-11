@@ -49,7 +49,8 @@ for person in participants:
 		lr_back_m, lr_back_s, lr_back_nfd, lr_back_nsd = sp.package_deal_signal(lr_back)
 
 		x = x + [lr_pfl_m, lr_pfl_s, lr_pfl_nfd, lr_pfl_nsd, lr_ears_m, lr_ears_s, 
-				lr_ears_nfd, lr_ears_nsd, lr_back_m, lr_back_s, lr_back_nfd, lr_back_nsd]
+				lr_ears_nfd, lr_ears_nsd, lr_back_m, lr_back_s, lr_back_nfd, lr_back_nsd] +
+				ef.power_spectrums(lr_pfl) + ef.power_spectrums(lr_ears) + ef.power_spectrums(lr_back)
 
 		# The left right assymetry signals alpha theta
 		lr_pfl = ef.lr_assymetry_pfl_t(channels_data)
@@ -62,13 +63,23 @@ for person in participants:
 		lr_back_m, lr_back_s, lr_back_nfd, lr_back_nsd = sp.package_deal_signal(lr_back)
 
 		x = x + [lr_pfl_m, lr_pfl_s, lr_pfl_nfd, lr_pfl_nsd, lr_ears_m, lr_ears_s, 
-				lr_ears_nfd, lr_ears_nsd, lr_back_m, lr_back_s, lr_back_nfd, lr_back_nsd]
+				lr_ears_nfd, lr_ears_nsd, lr_back_m, lr_back_s, lr_back_nfd, lr_back_nsd] +
+				ef.power_spectrums(lr_pfl) + ef.power_spectrums(lr_ears) + ef.power_spectrums(lr_back)
 		
-		# eeg_w for all the channels
-		eeg_w_list = []
+		# powerspectra for the assymetries
+
+
+		# # eeg_w for all the channels
+		# eeg_w_list = []
+		# for signal in channels_data:
+		# 	eeg_w_list.append(ef.eeg_w_beta(signal))
+		# x = x + eeg_w_list
+
+		# powerspectra for all the channels
+		powerspectra = []
 		for signal in channels_data:
-			eeg_w_list.append(ef.eeg_w_beta(signal))
-		x = x + eeg_w_list
+			powerspectra.extend(ef.power_spectrums(signal))
+		x = x + powerspectra
 
 		X.append(x)
 	print person

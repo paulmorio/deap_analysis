@@ -140,6 +140,14 @@ def eeg_bands(signal):
 
 	return alpha, theta, beta
 
+def power_spectrums(signal):
+	# calculates the concatenated vector of the power spectra
+	# for the alpha, theta, beta bands
+	# via the welch method for estimating spectral density
+	c = scipy.signal.welch(signal, fs=128, scaling = 'spectrum')
+	interestingPower = c[1][8:65]
+	return interestingPower
+
 def eeg_w_beta(signal):
 	# we calculate the relative logged power of the theta signal
 	# which has been shown to be correlated to workload, attention, valence*

@@ -70,6 +70,18 @@ def package_deal_signal(signal):
 
 	return m,s,nfd,nsd
 
+def package_deal_signal_mm(signal):
+	"""Returns the package of normalised mean, stdev, normalized first and second differences"""
+	normedSig = normalise_signal(signal)
+	m = mean(normedSig)
+	s = std_dev(normedSig)
+	mini = min(normedSig)
+	maxi = max(normedSig)
+	nfd = norm_first_differences(signal)
+	nsd = norm_second_differences(signal)
+
+	return m,s,nfd,nsd, mini, maxi
+
 def data_binarizer(ratings, threshold):
 	"""binarizes the data below and above the threshold"""
 	binarized = []
