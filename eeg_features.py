@@ -2,7 +2,7 @@
 import numpy as np
 import scipy.signal
 
-def lr_assymetry_pfl(channels):
+def lr_assymetry_pfl(channels, band="alpha"):
 	# asymmetry between left-right prefrontal areas alpha waves, most related to emotional state, and approach withdrawal
 	# Prefrontal Cortex, Emotion, and Approach/Withdrawal Motivation
 	# Jeffrey M. Spielberg, Jennifer L. Stewart, Rebecca L. Levin, Gregory A. Miller, and Wendy Heller
@@ -12,13 +12,20 @@ def lr_assymetry_pfl(channels):
 	f3 = channels[2]
 	f4 = channels[19]
 
-	alphaL, thetaL, betaL = eeg_bands(f3)
-	alphaR, thetaR, betaR = eeg_bands(f4)
+	alphaL, thetaL, betaL = power_spectrums_specific(f3)
+	alphaR, thetaR, betaR = power_spectrums_specific(f4)
 
-	alpha_assymetry = np.log(abs(alphaR))-np.log(abs(alphaL))
-	return alpha_assymetry
+	if (band == "alpha"):
+		assymetry_result = np.log(np.absolute(alphaR)) - np.log(np.absolute(alphaL))
+	else if (band == "theta"):
+		assymetry_result = np.log(np.absolute(thetaR)) - np.log(np.absolute(thetaL))
+	else:
+		assymetry_result = np.log(np.absolute(betaR)) - np.log(np.absolute(betaL))
 
-def lr_assymetry_ears(channels):
+	assymetry_result = np.log(np.absolute(alphaR))-np.log(np.absolute(alphaL))
+	return assymetry_result
+
+def lr_assymetry_ears(channels, band="alpha"):
 	# asymmetry between left-right ear areas alpha waves, most related to emotional state, and approach withdrawal
 	# Prefrontal Cortex, Emotion, and Approach/Withdrawal Motivation
 	# Jeffrey M. Spielberg, Jennifer L. Stewart, Rebecca L. Levin, Gregory A. Miller, and Wendy Heller
@@ -28,13 +35,20 @@ def lr_assymetry_ears(channels):
 	t7 = channels[7]
 	t8 = channels[25]
 
-	alphaL, thetaL, betaL = eeg_bands(t7)
-	alphaR, thetaR, betaR = eeg_bands(t8)
+	alphaL, thetaL, betaL = power_spectrums_specific(t7)
+	alphaR, thetaR, betaR = power_spectrums_specific(t8)
 
-	alpha_assymetry = np.log(abs(alphaR))-np.log(abs(alphaL))
-	return alpha_assymetry
+	if (band == "alpha"):
+		assymetry_result = np.log(np.absolute(alphaR)) - np.log(np.absolute(alphaL))
+	else if (band == "theta"):
+		assymetry_result = np.log(np.absolute(thetaR)) - np.log(np.absolute(thetaL))
+	else:
+		assymetry_result = np.log(np.absolute(betaR)) - np.log(np.absolute(betaL))
 
-def lr_assymetry_back(channels):
+	assymetry_result = np.log(np.absolute(alphaR))-np.log(np.absolute(alphaL))
+	return assymetry_result
+
+def lr_assymetry_back(channels, band="alpha"):
 	# asymmetry between left right back areas alpha waves, most related to emotional state, and approach withdrawal
 	# "OCCIPITAL AREA" related to vision
 	# Jeffrey M. Spielberg, Jennifer L. Stewart, Rebecca L. Levin, Gregory A. Miller, and Wendy Heller
@@ -44,59 +58,18 @@ def lr_assymetry_back(channels):
 	o1 = channels[7]
 	o2 = channels[25]
 
-	alphaL, thetaL, betaL = eeg_bands(o1)
-	alphaR, thetaR, betaR = eeg_bands(o2)
+	alphaL, thetaL, betaL = power_spectrums_specific(o1)
+	alphaR, thetaR, betaR = power_spectrums_specific(o2)
 
-	alpha_assymetry = np.log(abs(alphaR))-np.log(abs(alphaL))
-	return alpha_assymetry
+	if (band == "alpha"):
+		assymetry_result = np.log(np.absolute(alphaR)) - np.log(np.absolute(alphaL))
+	else if (band == "theta"):
+		assymetry_result = np.log(np.absolute(thetaR)) - np.log(np.absolute(thetaL))
+	else:
+		assymetry_result = np.log(np.absolute(betaR)) - np.log(np.absolute(betaL))
 
-def lr_assymetry_pfl_t(channels):
-	# asymmetry between left-right prefrontal areas alpha waves, most related to emotional state, and approach withdrawal
-	# Prefrontal Cortex, Emotion, and Approach/Withdrawal Motivation
-	# Jeffrey M. Spielberg, Jennifer L. Stewart, Rebecca L. Levin, Gregory A. Miller, and Wendy Heller
-
-	# Left Nodes = f3 (3 in the data)
-	# Right Nodes = f4 (20)
-	f3 = channels[2]
-	f4 = channels[19]
-
-	alphaL, thetaL, betaL = eeg_bands(f3)
-	alphaR, thetaR, betaR = eeg_bands(f4)
-
-	alpha_assymetry = np.log(abs(thetaR))-np.log(abs(thetaL))
-	return alpha_assymetry
-
-def lr_assymetry_ears_t(channels):
-	# asymmetry between left-right ear areas alpha waves, most related to emotional state, and approach withdrawal
-	# Prefrontal Cortex, Emotion, and Approach/Withdrawal Motivation
-	# Jeffrey M. Spielberg, Jennifer L. Stewart, Rebecca L. Levin, Gregory A. Miller, and Wendy Heller
-
-	# Left Nodes = f3 (3 in the data)
-	# Right Nodes = f4 (20)
-	t7 = channels[7]
-	t8 = channels[25]
-
-	alphaL, thetaL, betaL = eeg_bands(t7)
-	alphaR, thetaR, betaR = eeg_bands(t8)
-
-	alpha_assymetry = np.log(abs(thetaR))-np.log(abs(thetaL))
-	return alpha_assymetry
-
-def lr_assymetry_back_t(channels):
-	# asymmetry between left right back areas alpha waves, most related to emotional state, and approach withdrawal
-	# "OCCIPITAL AREA" related to vision
-	# Jeffrey M. Spielberg, Jennifer L. Stewart, Rebecca L. Levin, Gregory A. Miller, and Wendy Heller
-
-	# Left Nodes = f3 (3 in the data)
-	# Right Nodes = f4 (20)
-	o1 = channels[7]
-	o2 = channels[25]
-
-	alphaL, thetaL, betaL = eeg_bands(o1)
-	alphaR, thetaR, betaR = eeg_bands(o2)
-
-	alpha_assymetry = np.log(abs(thetaR))-np.log(abs(thetaL))
-	return alpha_assymetry
+	assymetry_result = np.log(np.absolute(alphaR))-np.log(np.absolute(alphaL))
+	return assymetry_result
 
 def eeg_bands(signal):
 	# returns the alpha, theta, beta
@@ -145,8 +118,19 @@ def power_spectrums(signal):
 	# for the alpha, theta, beta bands
 	# via the welch method for estimating spectral density
 	c = scipy.signal.welch(signal, fs=128, scaling = 'spectrum')
-	interestingPower = c[1][8:65]
+	interestingPower = c[1][8:61]
 	return interestingPower
+
+def power_spectrums_specific(signal):
+	# calculates the concatenated vector of the power spectra
+	# for the alpha, theta, beta bands
+	# via the welch method for estimating spectral density
+	c = scipy.signal.welch(signal, fs=128, scaling = 'spectrum')
+	alpha = (c[1])[8:17]
+	theta = (c[1])[16:25]
+	beta = (c[1])[25:61]
+
+	return alpha, theta, beta
 
 def eeg_w_beta(signal):
 	# we calculate the relative logged power of the theta signal
@@ -155,7 +139,7 @@ def eeg_w_beta(signal):
 	alpha, theta, beta = eeg_bands(signal)
 	nomin = np.sum(beta)
 	denom = np.sum(theta + alpha)
-	eeg_w = np.log(abs(nomin/denom))
+	eeg_w = np.log(np.absolute(nomin/denom))
 	return eeg_w
 
 

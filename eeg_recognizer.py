@@ -22,6 +22,8 @@ import matplotlib as plt
 from sklearn import metrics
 from sklearn import tree
 
+from sklearn.feature_selection import SelectKBest
+from sklearn.feature_selection import f_classif, f_regression
 
 ###################################################################################
 ############################### Load Dataset ######################################
@@ -49,7 +51,8 @@ print (dominancepd.describe())
 # pca_result = pca.fit_transform(X)
 # print 'Explained variation per principal component: {}'.format(pca.explained_variance_ratio_)
 
-pca_result = X
+pca_result = SelectKBest(f_classif, k=10).fit_transform(X, y_valence)
+# pca_result = X
 ####################
 ##### Valence ######
 ####################

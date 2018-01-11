@@ -21,7 +21,6 @@ raw_data_dict = cPickle.load(open('deap_data/data_preprocessed_python/all_32.dat
 
 participants = range(1,32)
 videos = range(1,40)
-channels = range(33,41) # we are interested only in the EEG data at the moment. 
 
 # Our data for the ml
 X = [] # make full dumb
@@ -39,9 +38,8 @@ for person in participants:
 
 		# Add features to our feature vector as necessary
 		for signal in channels_data:
-			m, s, nfd, nsd = sp.package_deal_signal(signal)
-			x.extend([m,s,nfd,nsd])
-			x.extend(pf.power_spectrums(signal))
+			m, s, nfd, nsd, mini, maxi = sp.package_deal_signal_mm(signal)
+			x.extend([m,s,nfd,nsd, mini, maxi])
 
 		X.append(x)
 	print person
