@@ -17,7 +17,7 @@ def lr_assymetry_pfl(channels, band="alpha"):
 
 	if (band == "alpha"):
 		assymetry_result = np.log(np.absolute(alphaR)) - np.log(np.absolute(alphaL))
-	else if (band == "theta"):
+	elif (band == "theta"):
 		assymetry_result = np.log(np.absolute(thetaR)) - np.log(np.absolute(thetaL))
 	else:
 		assymetry_result = np.log(np.absolute(betaR)) - np.log(np.absolute(betaL))
@@ -40,7 +40,7 @@ def lr_assymetry_ears(channels, band="alpha"):
 
 	if (band == "alpha"):
 		assymetry_result = np.log(np.absolute(alphaR)) - np.log(np.absolute(alphaL))
-	else if (band == "theta"):
+	elif (band == "theta"):
 		assymetry_result = np.log(np.absolute(thetaR)) - np.log(np.absolute(thetaL))
 	else:
 		assymetry_result = np.log(np.absolute(betaR)) - np.log(np.absolute(betaL))
@@ -63,7 +63,7 @@ def lr_assymetry_back(channels, band="alpha"):
 
 	if (band == "alpha"):
 		assymetry_result = np.log(np.absolute(alphaR)) - np.log(np.absolute(alphaL))
-	else if (band == "theta"):
+	elif (band == "theta"):
 		assymetry_result = np.log(np.absolute(thetaR)) - np.log(np.absolute(thetaL))
 	else:
 		assymetry_result = np.log(np.absolute(betaR)) - np.log(np.absolute(betaL))
@@ -73,8 +73,8 @@ def lr_assymetry_back(channels, band="alpha"):
 
 def eeg_bands(signal):
 	# returns the alpha, theta, beta
-	eeg = signal  
-	pi = 3.14
+	eeg = signal 
+	pi = np.pi
 	y = np.array(eeg)  # faster array
 	L = len(eeg)       # signal length
 	fs = 128.0     # frequency sampling 128Hz
@@ -107,9 +107,13 @@ def eeg_bands(signal):
 		[w,h]= scipy.signal.freqz(bn,1)
 		filtered.append(np.convolve(bn, y)) # filter the signal by convolving the signal with filter coefficients
 
+
 	alpha = filtered[1]
+	alpha = np.fft.fft(alpha [ M/2:L+M/2])
 	theta = filtered[2]
+	theta = np.fft.fft(theta [ M/2:L+M/2])
 	beta = filtered[3]
+	beta = np.fft.fft(beta [ M/2:L+M/2])
 
 	return alpha, theta, beta
 
@@ -133,10 +137,10 @@ def power_spectrums_specific(signal):
 	return alpha, theta, beta
 
 def eeg_w_beta(signal):
-	# we calculate the relative logged power of the theta signal
-	# which has been shown to be correlated to workload, attention, valence*
-	# Mental Fatigue Measurement Using EEG Cheng et al.
-	alpha, theta, beta = eeg_bands(signal)
+	# calculates eeg_w
+	# Chanel et al Emotion assessment from physiological signals for 
+	# adaptation of game difficulty
+	alpha, theta, beta = eeg_bands(signal[4224:])
 	nomin = np.sum(beta)
 	denom = np.sum(theta + alpha)
 	eeg_w = np.log(np.absolute(nomin/denom))

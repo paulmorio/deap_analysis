@@ -50,11 +50,11 @@ for person in participants:
 		# lr_back = ef.lr_assymetry_back_t(channels_data)
 		# x = x + lr_pfl.tolist() + lr_ears.tolist() + lr_back.tolist()
 
-		# # energy log sum ratios eeg_w for all the channels
-		# eeg_w_list = []
-		# for signal in channels_data:
-		# 	eeg_w_list.append(ef.eeg_w_beta(signal))
-		# x = x + eeg_w_list
+		# energy log sum ratios eeg_w for all the channels
+		eeg_w_list = []
+		for signal in channels_data:
+			eeg_w_list.append(ef.eeg_w_beta(signal))
+		x = x + eeg_w_list
 
 		# # powerspectra for all the channels
 		# powerspectra = []
