@@ -13,7 +13,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn import linear_model
-from sklearn.naive_bayes import GaussianNB
+from sklearn.naive_bayes import GaussianNB, MultinomialNB
 from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import cross_val_score
 from sklearn.decomposition import PCA
@@ -51,14 +51,14 @@ print (dominancepd.describe())
 # pca_result = pca.fit_transform(X)
 # print 'Explained variation per principal component: {}'.format(pca.explained_variance_ratio_)
 
-# pca_result = SelectKBest(f_classif, k=10).fit_transform(X, y_valence)
+#pca_result = SelectKBest(f_classif, k=10).fit_transform(X, y_valence)
 pca_result = X
 ####################
 ##### Valence ######
 ####################
 
 # Create and fit the Model using the training data
-gnb = svm.SVC()
+gnb = MultinomialNB()
 print "F1 SCORES \n"
 a = cross_val_score(gnb, pca_result, y_valence, cv= 32, scoring = 'f1', n_jobs=-1)
 print ((np.mean(a)), (np.std(a)))

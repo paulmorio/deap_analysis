@@ -42,25 +42,30 @@ for person in participants:
 		lr_pfl = ef.lr_assymetry_pfl(channels_data, "alpha")
 		lr_ears = ef.lr_assymetry_ears(channels_data, "alpha")
 		lr_back = ef.lr_assymetry_back(channels_data, "alpha")
-		x = x + lr_pfl.tolist() + lr_ears.tolist() + lr_back.tolist()
+		x = x + [lr_pfl, lr_ears, lr_back]
 
 		# The left right assymetry signals theta
 		lr_pfl = ef.lr_assymetry_pfl(channels_data, "theta")
 		lr_ears = ef.lr_assymetry_ears(channels_data, "theta")
 		lr_back = ef.lr_assymetry_back(channels_data, "theta")
-		x = x + lr_pfl.tolist() + lr_ears.tolist() + lr_back.tolist()
+		x = x + [lr_pfl, lr_ears, lr_back]
 
 		# The left right assymetry signals theta
 		lr_pfl = ef.lr_assymetry_pfl(channels_data, "beta")
 		lr_ears = ef.lr_assymetry_ears(channels_data, "beta")
 		lr_back = ef.lr_assymetry_back(channels_data, "beta")
-		x = x + lr_pfl.tolist() + lr_ears.tolist() + lr_back.tolist()
+		x = x + [lr_pfl, lr_ears, lr_back]
 
 		# energy log sum ratios eeg_w for all the channels
 		eeg_w_list = []
 		for signal in channels_data:
 			eeg_w_list.append(ef.eeg_w_beta(signal))
 		x = x + eeg_w_list
+
+		# energy log sum ratios eeg_w for all the channels
+		for signal in channels_data:
+			x = x + ef.power_spectrums(signal)
+
 
 		X.append(x)
 	print person

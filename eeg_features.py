@@ -118,20 +118,25 @@ def power_spectrums(signal):
 	# calculates the concatenated vector of the power spectra
 	# for the alpha, theta, beta bands
 	# via the welch method for estimating spectral density
-	c = scipy.signal.welch(signal, fs=128, scaling = 'spectrum')
-	interestingPower = c[1][8:61]
-	return interestingPower
+	dk, baseline = scipy.signal.welch(signal[:384], fs=128, scaling = 'spectrum')
+	dk, trial_freq = scipy.signal.welch(signal[4224:], fs=128, scaling = 'spectrum')
+	c = trial_freq-baseline
+	alpha = np.log(np.mean(c[8:17]))
+	theta = np.log(np.mean(c[16:25]))
+	beta = np.log(np.mean(c[25:61]))
+	return [alpha, theta, beta]
+
 
 def power_spectrums_specific(signal):
 	# calculates the concatenated vector of the power spectra
 	# for the alpha, theta, beta bands
 	# via the welch method for estimating spectral density
-	baseline = scipy.signal.welch(signal[:384], fs=128, scaling = 'spectrum')
-	trial_freq = scipy.signal.welch(signal[4224:], fs=128, scaling = 'spectrum')
+	dk, baseline = scipy.signal.welch(signal[:384], fs=128, scaling = 'spectrum')
+	dk, trial_freq = scipy.signal.welch(signal[4224:], fs=128, scaling = 'spectrum')
 	c = trial_freq-baseline
-	alpha = np.mean((c[1])[8:17])
-	theta = np.mean((c[1])[16:25])
-	beta = np.mean((c[1])[25:61])
+	alpha = np.mean(c[8:17])
+	theta = np.mean(c[16:25])
+	beta = np.mean(c[25:61])
 
 	return alpha, theta, beta
 
