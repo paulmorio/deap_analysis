@@ -129,7 +129,9 @@ def power_spectrums_specific(signal):
 	# calculates the concatenated vector of the power spectra
 	# for the alpha, theta, beta bands
 	# via the welch method for estimating spectral density
-	c = scipy.signal.welch(signal, fs=128, scaling = 'spectrum')
+	baseline = scipy.signal.welch(signal[:384], fs=128, scaling = 'spectrum')
+	trial_freq = scipy.signal.welch(signal[4224:], fs=128, scaling = 'spectrum')
+	c = trial_freq-baseline
 	alpha = (c[1])[8:17]
 	theta = (c[1])[16:25]
 	beta = (c[1])[25:61]
