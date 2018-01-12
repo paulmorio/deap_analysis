@@ -22,7 +22,6 @@ def lr_assymetry_pfl(channels, band="alpha"):
 	else:
 		assymetry_result = np.log(np.absolute(betaR)) - np.log(np.absolute(betaL))
 
-	assymetry_result = np.log(np.absolute(alphaR))-np.log(np.absolute(alphaL))
 	return assymetry_result
 
 def lr_assymetry_ears(channels, band="alpha"):
@@ -45,7 +44,6 @@ def lr_assymetry_ears(channels, band="alpha"):
 	else:
 		assymetry_result = np.log(np.absolute(betaR)) - np.log(np.absolute(betaL))
 
-	assymetry_result = np.log(np.absolute(alphaR))-np.log(np.absolute(alphaL))
 	return assymetry_result
 
 def lr_assymetry_back(channels, band="alpha"):
@@ -68,7 +66,6 @@ def lr_assymetry_back(channels, band="alpha"):
 	else:
 		assymetry_result = np.log(np.absolute(betaR)) - np.log(np.absolute(betaL))
 
-	assymetry_result = np.log(np.absolute(alphaR))-np.log(np.absolute(alphaL))
 	return assymetry_result
 
 def eeg_bands(signal):
@@ -132,9 +129,9 @@ def power_spectrums_specific(signal):
 	baseline = scipy.signal.welch(signal[:384], fs=128, scaling = 'spectrum')
 	trial_freq = scipy.signal.welch(signal[4224:], fs=128, scaling = 'spectrum')
 	c = trial_freq-baseline
-	alpha = (c[1])[8:17]
-	theta = (c[1])[16:25]
-	beta = (c[1])[25:61]
+	alpha = np.mean((c[1])[8:17])
+	theta = np.mean((c[1])[16:25])
+	beta = np.mean((c[1])[25:61])
 
 	return alpha, theta, beta
 
