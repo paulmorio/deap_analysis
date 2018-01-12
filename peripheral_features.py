@@ -10,5 +10,5 @@ def power_spectrums(signal):
 	dk, baseline = scipy.signal.welch(signal[:384], fs=128, scaling = 'spectrum')
 	dk, trial_freq = scipy.signal.welch(signal[5760:], fs=128, scaling = 'spectrum')
 	c = trial_freq-baseline
-	alpha = np.log(np.square(np.mean(c)))
-	return c
+	power = np.log(np.square(np.mean(c)))
+	return power
