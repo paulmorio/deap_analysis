@@ -58,7 +58,7 @@ pca_result = X
 ####################
 
 # Create and fit the Model using the training data
-gnb = MultinomialNB()
+gnb = svm.SVC()
 print "F1 SCORES \n"
 a = cross_val_score(gnb, pca_result, y_valence, cv= 32, scoring = 'f1', n_jobs=-1)
 print ((np.mean(a)), (np.std(a)))

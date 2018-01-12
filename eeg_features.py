@@ -16,11 +16,11 @@ def lr_assymetry_pfl(channels, band="alpha"):
 	alphaR, thetaR, betaR = power_spectrums_specific(f4)
 
 	if (band == "alpha"):
-		assymetry_result = np.log(np.absolute(alphaR)) - np.log(np.absolute(alphaL))
+		assymetry_result = np.log(np.square(alphaR)) - np.log(np.square(alphaL))
 	elif (band == "theta"):
-		assymetry_result = np.log(np.absolute(thetaR)) - np.log(np.absolute(thetaL))
+		assymetry_result = np.log(np.square(thetaR)) - np.log(np.square(thetaL))
 	else:
-		assymetry_result = np.log(np.absolute(betaR)) - np.log(np.absolute(betaL))
+		assymetry_result = np.log(np.square(betaR)) - np.log(np.square(betaL))
 
 	return assymetry_result
 
@@ -38,11 +38,11 @@ def lr_assymetry_ears(channels, band="alpha"):
 	alphaR, thetaR, betaR = power_spectrums_specific(t8)
 
 	if (band == "alpha"):
-		assymetry_result = np.log(np.absolute(alphaR)) - np.log(np.absolute(alphaL))
+		assymetry_result = np.log(np.square(alphaR)) - np.log(np.square(alphaL))
 	elif (band == "theta"):
-		assymetry_result = np.log(np.absolute(thetaR)) - np.log(np.absolute(thetaL))
+		assymetry_result = np.log(np.square(thetaR)) - np.log(np.square(thetaL))
 	else:
-		assymetry_result = np.log(np.absolute(betaR)) - np.log(np.absolute(betaL))
+		assymetry_result = np.log(np.square(betaR)) - np.log(np.square(betaL))
 
 	return assymetry_result
 
@@ -60,11 +60,11 @@ def lr_assymetry_back(channels, band="alpha"):
 	alphaR, thetaR, betaR = power_spectrums_specific(o2)
 
 	if (band == "alpha"):
-		assymetry_result = np.log(np.absolute(alphaR)) - np.log(np.absolute(alphaL))
+		assymetry_result = np.log(np.square(alphaR)) - np.log(np.square(alphaL))
 	elif (band == "theta"):
-		assymetry_result = np.log(np.absolute(thetaR)) - np.log(np.absolute(thetaL))
+		assymetry_result = np.log(np.square(thetaR)) - np.log(np.square(thetaL))
 	else:
-		assymetry_result = np.log(np.absolute(betaR)) - np.log(np.absolute(betaL))
+		assymetry_result = np.log(np.square(betaR)) - np.log(np.square(betaL))
 
 	return assymetry_result
 
@@ -121,9 +121,9 @@ def power_spectrums(signal):
 	dk, baseline = scipy.signal.welch(signal[:384], fs=128, scaling = 'spectrum')
 	dk, trial_freq = scipy.signal.welch(signal[4224:], fs=128, scaling = 'spectrum')
 	c = trial_freq-baseline
-	alpha = np.log(np.mean(c[8:17]))
-	theta = np.log(np.mean(c[16:25]))
-	beta = np.log(np.mean(c[25:61]))
+	alpha = np.log(np.square(np.mean(c[8:17])))
+	theta = np.log(np.square(np.mean(c[16:25])))
+	beta = np.log(np.square(np.mean(c[25:61])))
 	return [alpha, theta, beta]
 
 
@@ -147,7 +147,7 @@ def eeg_w_beta(signal):
 	alpha, theta, beta = eeg_bands(signal[4224:])
 	nomin = np.sum(beta)
 	denom = np.sum(theta + alpha)
-	eeg_w = np.log(np.absolute(nomin/denom))
+	eeg_w = np.log(np.square(nomin/denom))
 	return eeg_w
 
 
