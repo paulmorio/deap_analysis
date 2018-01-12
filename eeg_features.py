@@ -104,7 +104,6 @@ def eeg_bands(signal):
 		[w,h]= scipy.signal.freqz(bn,1)
 		filtered.append(np.convolve(bn, y)) # filter the signal by convolving the signal with filter coefficients
 
-
 	alpha = filtered[1]
 	alpha = np.fft.fft(alpha [ M/2:L+M/2])
 	theta = filtered[2]
@@ -112,7 +111,7 @@ def eeg_bands(signal):
 	beta = filtered[3]
 	beta = np.fft.fft(beta [ M/2:L+M/2])
 
-	return alpha, theta, beta
+	return alpha.real, theta.real, beta.real
 
 def power_spectrums(signal):
 	# calculates the concatenated vector of the power spectra
@@ -147,7 +146,5 @@ def eeg_w_beta(signal):
 	alpha, theta, beta = eeg_bands(signal[4224:])
 	nomin = np.sum(beta)
 	denom = np.sum(theta + alpha)
-	eeg_w = np.log(np.square(nomin/denom))
+	eeg_w = np.log(np.absolute(nomin/denom))
 	return eeg_w
-
-

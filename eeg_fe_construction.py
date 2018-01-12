@@ -62,7 +62,7 @@ for person in participants:
 			eeg_w_list.append(ef.eeg_w_beta(signal))
 		x = x + eeg_w_list
 
-		# energy log sum ratios eeg_w for all the channels
+		# powerspectrumstuff
 		for signal in channels_data:
 			x = x + ef.power_spectrums(signal)
 

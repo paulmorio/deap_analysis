@@ -7,9 +7,8 @@ def power_spectrums(signal):
 	# calculates the concatenated vector of the power spectra
 	# for the alpha, theta, beta bands
 	# via the welch method for estimating spectral density
-	c = scipy.signal.welch(signal, fs=128, scaling = 'spectrum')
-	interestingPower = c[1]
-	return interestingPower
-
-def baselined_last_30_seconds(signal):
-	pass
+	dk, baseline = scipy.signal.welch(signal[:384], fs=128, scaling = 'spectrum')
+	dk, trial_freq = scipy.signal.welch(signal[5760:], fs=128, scaling = 'spectrum')
+	c = trial_freq-baseline
+	alpha = np.log(np.square(np.mean(c)))
+	return c

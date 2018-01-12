@@ -40,6 +40,7 @@ for person in participants:
 		for signal in channels_data:
 			m, s, nfd, nsd, mini, maxi = sp.package_deal_signal_mm(signal)
 			x.extend([m,s,nfd,nsd, mini, maxi])
+			x.append(pf.power_spectrums(signal))
 
 		X.append(x)
 	print person
