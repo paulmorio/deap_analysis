@@ -31,12 +31,12 @@ from sklearn.feature_selection import f_classif, f_regression
 
 # Data loader edition
 X, y = cPickle.load(open('deap_data/eeg_data.dat', 'rb'))
+X = np.array(X[:40])
+y = np.array(y[:40])
+
 y_valence = np.array(sp.data_binarizer([el[0] for el in y],5))
 y_arousal = np.array(sp.data_binarizer([el[1] for el in y],5))
 y_dominance = np.array(sp.data_binarizer([el[2] for el in y],5))
-
-X = np.array(X)
-y = np.array(y)
 
 # Describe the data
 valencepd = pd.Categorical(y_valence)
@@ -46,70 +46,71 @@ print (valencepd.describe())
 print (arousalpd.describe())
 print (dominancepd.describe())
 
-pca_result = SelectKBest(f_classif, k=10).fit_transform(X, y_valence)
-# pca_result = X
+# pca_result = SelectKBest(f_classif, k=5).fit_transform(X, y_valence)
+pca_result = X
 
 ####################
 ##### Valence ######
 ####################
-print ("This is Valence")
-g_range = 2. ** np.arange(-10,10,step = 1)
-C_range = 2. ** np.arange(-10,10,step=1)
-parameters = [{'gamma':g_range, 'C':C_range, 'kernel':['rbf']}]
-grid = GridSearchCV(svm.SVC(), parameters, cv = 10, n_jobs = -1)
-grid.fit(X, y_valence)
-bestG = grid.best_params_['gamma']
-bestC = grid.best_params_['C']
-print("The best parameters for valence are: gamma=", np.log2(bestG), " and Cost = ", np.log2(bestC))
-SVM_rbf_valence = svm.SVC(kernel='rbf', C= (bestC), gamma= (bestG)) # For RBF Kernel
+# print ("This is Valence")
+# g_range = 2. ** np.arange(-15,5,step = 1)
+# C_range = 2. ** np.arange(-15,5,step=1)
+# parameters = [{'gamma':g_range, 'C':C_range, 'kernel':['rbf']}]
+# grid = GridSearchCV(svm.SVC(), parameters, cv = 10, n_jobs = -1)
+# grid.fit(X, y_valence)
+# bestG = grid.best_params_['gamma']
+# bestC = grid.best_params_['C']
+# print("The best parameters for valence are: gamma=", np.log2(bestG), " and Cost = ", np.log2(bestC))
+# SVM_rbf_valence = svm.SVC(kernel='rbf', C= (bestC), gamma= (bestG)) # For RBF Kernel
 
+SVM_rbf_valence = svm.SVC()
 print "F1 SCORES \n"
-a = cross_val_score(SVM_rbf_valence, pca_result, y_valence, cv= 32, scoring = 'f1', n_jobs=-1)
+a = cross_val_score(SVM_rbf_valence, pca_result, y_valence, cv= 5, scoring = 'f1', n_jobs=-1)
 print ((np.mean(a)), (np.std(a)))
 
 print "\n ACCURACY SCORES \n"
 # Create and fit the Model using the training data
-a = cross_val_score(SVM_rbf_valence, pca_result, y_valence, cv= 32, scoring = 'accuracy', n_jobs=-1)
+a = cross_val_score(SVM_rbf_valence, pca_result, y_valence, cv= 5, scoring = 'accuracy', n_jobs=-1)
 print ((np.mean(a)), (np.std(a)))
 
 ####################
 ##### Arousal ######
 ####################
-print ("This is Arousal")
-g_range = 2. ** np.arange(-10,10,step = 1)
-C_range = 2. ** np.arange(-10,10,step=1)
-parameters = [{'gamma':g_range, 'C':C_range, 'kernel':['rbf']}]
-grid = GridSearchCV(svm.SVC(), parameters, cv = 10, n_jobs = -1)
-grid.fit(X, y_valence)
-bestG = grid.best_params_['gamma']
-bestC = grid.best_params_['C']
-print("The best parameters for valence are: gamma=", np.log2(bestG), " and Cost = ", np.log2(bestC))
-SVM_rbf_arousal = svm.SVC(kernel='rbf', C= (bestC), gamma= (bestG)) # For RBF Kernel
+# print ("This is Arousal")
+# g_range = 2. ** np.arange(-15,5,step = 1)
+# C_range = 2. ** np.arange(-15,5,step=1)
+# parameters = [{'gamma':g_range, 'C':C_range, 'kernel':['rbf']}]
+# grid = GridSearchCV(svm.SVC(), parameters, cv = 10, n_jobs = -1)
+# grid.fit(X, y_valence)
+# bestG = grid.best_params_['gamma']
+# bestC = grid.best_params_['C']
+# print("The best parameters for valence are: gamma=", np.log2(bestG), " and Cost = ", np.log2(bestC))
+# SVM_rbf_arousal = svm.SVC(kernel='rbf', C= (bestC), gamma= (bestG)) # For RBF Kernel
 
-a = cross_val_score(SVM_rbf_arousal, pca_result, y_arousal, cv= 32, scoring = 'f1', n_jobs=-1)
-print ((np.mean(a)), (np.std(a)))
+# a = cross_val_score(SVM_rbf_arousal, pca_result, y_arousal, cv= 32, scoring = 'f1', n_jobs=-1)
+# print ((np.mean(a)), (np.std(a)))
 
 
-a = cross_val_score(SVM_rbf_arousal, pca_result, y_arousal, cv= 32, scoring = 'accuracy', n_jobs=-1)
-print ((np.mean(a)), (np.std(a)))
+# a = cross_val_score(SVM_rbf_arousal, pca_result, y_arousal, cv= 32, scoring = 'accuracy', n_jobs=-1)
+# print ((np.mean(a)), (np.std(a)))
 
 
 ####################
 ##### Dominance ####
 ####################
-print ("This is Dominance")
-g_range = 2. ** np.arange(-10,10,step = 1)
-C_range = 2. ** np.arange(-10,10,step=1)
-parameters = [{'gamma':g_range, 'C':C_range, 'kernel':['rbf']}]
-grid = GridSearchCV(svm.SVC(), parameters, cv = 10, n_jobs = -1)
-grid.fit(X, y_valence)
-bestG = grid.best_params_['gamma']
-bestC = grid.best_params_['C']
-print("The best parameters for valence are: gamma=", np.log2(bestG), " and Cost = ", np.log2(bestC))
-SVM_rbf_dominance = svm.SVC(kernel='rbf', C= (bestC), gamma= (bestG)) # For RBF Kernel
+# print ("This is Dominance")
+# g_range = 2. ** np.arange(-15,5,step = 1)
+# C_range = 2. ** np.arange(-15,5,step=1)
+# parameters = [{'gamma':g_range, 'C':C_range, 'kernel':['rbf']}]
+# grid = GridSearchCV(svm.SVC(), parameters, cv = 10, n_jobs = -1)
+# grid.fit(X, y_valence)
+# bestG = grid.best_params_['gamma']
+# bestC = grid.best_params_['C']
+# print("The best parameters for valence are: gamma=", np.log2(bestG), " and Cost = ", np.log2(bestC))
+# SVM_rbf_dominance = svm.SVC(kernel='rbf', C= (bestC), gamma= (bestG)) # For RBF Kernel
 
-a = cross_val_score(SVM_rbf_dominance, pca_result, y_dominance, cv= 32, scoring = 'f1', n_jobs=-1)
-print ((np.mean(a)), (np.std(a)))
+# a = cross_val_score(SVM_rbf_dominance, pca_result, y_dominance, cv= 32, scoring = 'f1', n_jobs=-1)
+# print ((np.mean(a)), (np.std(a)))
 
-a = cross_val_score(SVM_rbf_dominance, pca_result, y_dominance, cv= 32, scoring = 'accuracy', n_jobs=-1)
-print ((np.mean(a)), (np.std(a)))
+# a = cross_val_score(SVM_rbf_dominance, pca_result, y_dominance, cv= 32, scoring = 'accuracy', n_jobs=-1)
+# print ((np.mean(a)), (np.std(a)))

@@ -12,3 +12,7 @@ def power_spectrums(signal):
 	c = trial_freq-baseline
 	power = np.log(np.square(np.mean(c)))
 	return power
+
+def average_gradient(signal):
+	gradients = np.gradient(signal)
+	return np.mean(gradients)

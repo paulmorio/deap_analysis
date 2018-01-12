@@ -1,3 +1,4 @@
+# single trial peripheral features data constructor
 # EMG and peripheral data feature extraction and construction. 
 
 # Affect recognition via EEG
@@ -23,11 +24,13 @@ participants = range(1,32)
 videos = range(1,40)
 
 # Our data for the ml
-X = [] # make full dumb
-y = [] # put all ratings, so we can subset laters
+st_X = []
+st_y = []
 
 # construct feature vectors
 for person in participants:
+	X = [] # make full dumb
+	y = [] # put all ratings, so we can subset laters
 	for vid in videos:
 		channels_data = (((raw_data_dict[person])['data'])[vid])[32:]
 		ratings = ((raw_data_dict[person]['labels'])[vid])
@@ -45,7 +48,9 @@ for person in participants:
 
 		X.append(x)
 	print person
+	st_X.append(X)
+	st_y.append(y)
 
 f = open('deap_data/peripheral_data.dat', 'wb')
-cPickle.dump((X,y), f, protocol=cPickle.HIGHEST_PROTOCOL)
+cPickle.dump((st_X,st_y), f, protocol=cPickle.HIGHEST_PROTOCOL)
 f.close()
