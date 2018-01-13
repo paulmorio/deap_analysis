@@ -49,6 +49,7 @@ def looCV(X,y):
 		svmRBF.fit(train_X, train_y)
 
 		# svmRBF = svm.SVC()
+		# svmRBF.fit(train_X, train_y)
 		y_pred = svmRBF.predict(test_X)
 		classification_accuracy.append(metrics.accuracy_score(test_y, y_pred))
 		f1score.append(metrics.f1_score(test_y, y_pred))
