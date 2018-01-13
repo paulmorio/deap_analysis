@@ -53,15 +53,6 @@ pca_result = X
 ##### Valence ######
 ####################
 # print ("This is Valence")
-# g_range = 2. ** np.arange(-15,5,step = 1)
-# C_range = 2. ** np.arange(-15,5,step=1)
-# parameters = [{'gamma':g_range, 'C':C_range, 'kernel':['rbf']}]
-# grid = GridSearchCV(svm.SVC(), parameters, cv = 10, n_jobs = -1)
-# grid.fit(X, y_valence)
-# bestG = grid.best_params_['gamma']
-# bestC = grid.best_params_['C']
-# print("The best parameters for valence are: gamma=", np.log2(bestG), " and Cost = ", np.log2(bestC))
-# SVM_rbf_valence = svm.SVC(kernel='rbf', C= (bestC), gamma= (bestG)) # For RBF Kernel
 
 SVM_rbf_valence = svm.SVC()
 print "F1 SCORES \n"
@@ -77,15 +68,6 @@ print ((np.mean(a)), (np.std(a)))
 ##### Arousal ######
 ####################
 # print ("This is Arousal")
-# g_range = 2. ** np.arange(-15,5,step = 1)
-# C_range = 2. ** np.arange(-15,5,step=1)
-# parameters = [{'gamma':g_range, 'C':C_range, 'kernel':['rbf']}]
-# grid = GridSearchCV(svm.SVC(), parameters, cv = 10, n_jobs = -1)
-# grid.fit(X, y_valence)
-# bestG = grid.best_params_['gamma']
-# bestC = grid.best_params_['C']
-# print("The best parameters for valence are: gamma=", np.log2(bestG), " and Cost = ", np.log2(bestC))
-# SVM_rbf_arousal = svm.SVC(kernel='rbf', C= (bestC), gamma= (bestG)) # For RBF Kernel
 
 # a = cross_val_score(SVM_rbf_arousal, pca_result, y_arousal, cv= 32, scoring = 'f1', n_jobs=-1)
 # print ((np.mean(a)), (np.std(a)))
@@ -99,15 +81,6 @@ print ((np.mean(a)), (np.std(a)))
 ##### Dominance ####
 ####################
 # print ("This is Dominance")
-# g_range = 2. ** np.arange(-15,5,step = 1)
-# C_range = 2. ** np.arange(-15,5,step=1)
-# parameters = [{'gamma':g_range, 'C':C_range, 'kernel':['rbf']}]
-# grid = GridSearchCV(svm.SVC(), parameters, cv = 10, n_jobs = -1)
-# grid.fit(X, y_valence)
-# bestG = grid.best_params_['gamma']
-# bestC = grid.best_params_['C']
-# print("The best parameters for valence are: gamma=", np.log2(bestG), " and Cost = ", np.log2(bestC))
-# SVM_rbf_dominance = svm.SVC(kernel='rbf', C= (bestC), gamma= (bestG)) # For RBF Kernel
 
 # a = cross_val_score(SVM_rbf_dominance, pca_result, y_dominance, cv= 32, scoring = 'f1', n_jobs=-1)
 # print ((np.mean(a)), (np.std(a)))
