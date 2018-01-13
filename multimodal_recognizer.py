@@ -35,8 +35,8 @@ def looCV(X,y):
 	f1score = []
 
 	# evilknievel edition
-	g_range = 2. ** np.arange(-15,5,step = 1)
-	C_range = 2. ** np.arange(-15,5,step=1)
+	g_range = 2. ** np.arange(-15,15,step = 1)
+	C_range = 2. ** np.arange(-15,15,step=1)
 	parameters = [{'gamma':g_range, 'C':C_range, 'kernel':['rbf']}]
 	grid = GridSearchCV(svm.SVC(), parameters, n_jobs = -1)
 	grid.fit(X, y)
