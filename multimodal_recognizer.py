@@ -34,19 +34,21 @@ def looCV(X,y):
 	classification_accuracy = []
 	f1score = []
 
+	X_feated = SelectKBest(f_classif, k=40).fit_transform(X, y)
+
 	# evilknievel edition
 	g_range = 2. ** np.arange(-15,15,step = 1)
 	C_range = 2. ** np.arange(-15,15,step=1)
 	parameters = [{'gamma':g_range, 'C':C_range, 'kernel':['rbf']}]
 	grid = GridSearchCV(svm.SVC(), parameters, n_jobs = -1)
-	grid.fit(X, y)
+	grid.fit(X_feated, y)
 	bestG = grid.best_params_['gamma']
 	bestC = grid.best_params_['C']
 	print("The best parameters for valence are: gamma=", np.log2(bestG), " and Cost = ", np.log2(bestC))
 	svmRBF = svm.SVC(kernel='rbf', C= (bestC), gamma= (bestG)) # For RBF Kernel
 
-	for train_index, test_index in loo.split(X):
-		train_X, test_X = X[train_index], X[test_index]
+	for train_index, test_index in loo.split(X_feated):
+		train_X, test_X = X_feated[train_index], X_feated[test_index]
 		train_y, test_y = y[train_index], y[test_index]
 
 		# # evilknievel edition
