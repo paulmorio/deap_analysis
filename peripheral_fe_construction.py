@@ -19,8 +19,8 @@ raw_data_dict = cPickle.load(open('deap_data/data_preprocessed_python/all_32.dat
 # 'data'	40 x 40 x 8064	video/trial x channel x data
 # 'labels'	40 x 4	video/trial x label (valence, arousal, dominance, liking)
 
-participants = range(1,32)
-videos = range(1,40)
+participants = range(1,33)
+videos = range(0,40)
 
 # Our data for the ml
 X = [] # make full dumb

@@ -1,6 +1,5 @@
 # facial embedding fe construction
 
-# Affect recognition via EEG
 import numpy as np
 import signalpreprocess as sp
 import peripheral_features as pf
