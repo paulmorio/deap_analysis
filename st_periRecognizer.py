@@ -32,6 +32,18 @@ def looCV(X,y):
 	loo = LeaveOneOut()
 	classification_accuracy = []
 	f1score = []
+
+	# # evilknievel edition
+	# g_range = 2. ** np.arange(-15,5,step = 1)
+	# C_range = 2. ** np.arange(-15,5,step=1)
+	# parameters = [{'gamma':g_range, 'C':C_range, 'kernel':['rbf']}]
+	# grid = GridSearchCV(svm.SVC(), parameters, n_jobs = -1)
+	# grid.fit(X, y)
+	# bestG = grid.best_params_['gamma']
+	# bestC = grid.best_params_['C']
+	# print("The best parameters for valence are: gamma=", np.log2(bestG), " and Cost = ", np.log2(bestC))
+	# svmRBF = svm.SVC(kernel='rbf', C= (bestC), gamma= (bestG)) # For RBF Kernel
+
 	for train_index, test_index in loo.split(X):
 		train_X, test_X = X[train_index], X[test_index]
 		train_y, test_y = y[train_index], y[test_index]
@@ -40,12 +52,13 @@ def looCV(X,y):
 		g_range = 2. ** np.arange(-15,5,step = 1)
 		C_range = 2. ** np.arange(-15,5,step=1)
 		parameters = [{'gamma':g_range, 'C':C_range, 'kernel':['rbf']}]
-		grid = GridSearchCV(svm.SVC(), parameters, cv = 3, n_jobs = -1)
-		grid.fit(train_X, train_y)
+		grid = GridSearchCV(svm.SVC(), parameters, n_jobs = -1)
+		grid.fit(X, y)
 		bestG = grid.best_params_['gamma']
 		bestC = grid.best_params_['C']
 		print("The best parameters for valence are: gamma=", np.log2(bestG), " and Cost = ", np.log2(bestC))
 		svmRBF = svm.SVC(kernel='rbf', C= (bestC), gamma= (bestG)) # For RBF Kernel
+
 		svmRBF.fit(train_X, train_y)
 
 		# svmRBF = svm.SVC()
