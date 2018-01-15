@@ -30,39 +30,43 @@ from sklearn.feature_selection import f_classif, f_regression
 ###################################################################################
 
 # Data loader edition
-X, y = cPickle.load(open('deap_data/eeg_data.dat', 'rb'))
-X = np.array(X[:40])
-y = np.array(y[:40])
+X, y = cPickle.load(open('deap_data/eeg_data_old.dat', 'rb'))
+X = np.array(X)
+y = np.array(y)
 
 y_valence = np.array(sp.data_binarizer([el[0] for el in y],5))
 y_arousal = np.array(sp.data_binarizer([el[1] for el in y],5))
 y_dominance = np.array(sp.data_binarizer([el[2] for el in y],5))
+y_liking = np.array(sp.data_binarizer([el[3] for el in y],5))
+
 
 # Describe the data
-valencepd = pd.Categorical(y_valence)
 arousalpd = pd.Categorical(y_arousal)
+valencepd = pd.Categorical(y_valence)
 dominancepd = pd.Categorical(y_dominance)
-print (valencepd.describe())
+likingpd = pd.Categorical(y_liking)
 print (arousalpd.describe())
+print (valencepd.describe())
 print (dominancepd.describe())
+print (likingpd.describe())
 
-# pca_result = SelectKBest(f_classif, k=5).fit_transform(X, y_valence)
-pca_result = X
+# # pca_result = SelectKBest(f_classif, k=5).fit_transform(X, y_valence)
+# pca_result = X
 
-####################
-##### Valence ######
-####################
-# print ("This is Valence")
+# ####################
+# ##### Valence ######
+# ####################
+# # print ("This is Valence")
 
-SVM_rbf_valence = svm.SVC()
-print "F1 SCORES \n"
-a = cross_val_score(SVM_rbf_valence, pca_result, y_valence, cv= 5, scoring = 'f1', n_jobs=-1)
-print ((np.mean(a)), (np.std(a)))
+# SVM_rbf_valence = svm.SVC()
+# print "F1 SCORES \n"
+# a = cross_val_score(SVM_rbf_valence, pca_result, y_valence, cv= 5, scoring = 'f1', n_jobs=-1)
+# print ((np.mean(a)), (np.std(a)))
 
-print "\n ACCURACY SCORES \n"
-# Create and fit the Model using the training data
-a = cross_val_score(SVM_rbf_valence, pca_result, y_valence, cv= 5, scoring = 'accuracy', n_jobs=-1)
-print ((np.mean(a)), (np.std(a)))
+# print "\n ACCURACY SCORES \n"
+# # Create and fit the Model using the training data
+# a = cross_val_score(SVM_rbf_valence, pca_result, y_valence, cv= 5, scoring = 'accuracy', n_jobs=-1)
+# print ((np.mean(a)), (np.std(a)))
 
 ####################
 ##### Arousal ######
