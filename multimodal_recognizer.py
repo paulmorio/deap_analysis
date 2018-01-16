@@ -34,7 +34,8 @@ def looCV(X,y):
 	classification_accuracy = []
 	f1score = []
 
-	X_feated = SelectKBest(f_classif, k=40).fit_transform(X, y)
+	# X_feated = SelectKBest(f_classif, k=40).fit_transform(X, y)
+	X_feated = X
 
 	# evilknievel edition
 	g_range = 2. ** np.arange(-15,15,step = 1)
@@ -71,6 +72,11 @@ def looCV(X,y):
 
 	return np.mean(classification_accuracy), np.mean(f1score)
 
+def classHighFrac(binaryArray):
+	# count the number of 1s in percentage
+	num_ones = np.count_nonzero(binaryArray == 1)
+	fraction_ones = (float(num_ones)/len(binaryArray))
+	return fraction_ones
 
 ###################################################################################
 ############################### Load Dataset ######################################
